@@ -2,70 +2,73 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Card {
-    protected char unicodeCard;
+    protected String type;
+    protected char suit;
     protected int value;
 
     public Card() {}
 
-    public Card(char unicodeCard, int value) {
-        this.unicodeCard = unicodeCard;
+    public Card(String type, char suit, int value) {
+        this.type = type;
+        this.suit = suit;
         this.value = value;
     }
 
+    //spade = u2660; heart = u2665; diamond = u2666; club = u2663;
     public ArrayList<Card> buildDeck() {
         ArrayList<Card> deck = new ArrayList<>();
-        deck.add(new Card('\uF0A1', 11));
-        deck.add(new Card('\uF0B1', 11));
-        deck.add(new Card('\uF0C1', 11));
-        deck.add(new Card('\uF0D1', 11));
-        deck.add(new Card('\uF0A2', 2));
-        deck.add(new Card('\uF0B2', 2));
-        deck.add(new Card('\uF0C2', 2));
-        deck.add(new Card('\uF0D2', 2));
-        deck.add(new Card('\uF0A3', 3));
-        deck.add(new Card('\uF0B3', 3));
-        deck.add(new Card('\uF0C3', 3));
-        deck.add(new Card('\uF0D3', 3));
-        deck.add(new Card('\uF0A4', 4));
-        deck.add(new Card('\uF0B4', 4));
-        deck.add(new Card('\uF0C4', 4));
-        deck.add(new Card('\uF0D4', 4));
-        deck.add(new Card('\uF0A5', 5));
-        deck.add(new Card('\uF0B5', 5));
-        deck.add(new Card('\uF0C5', 5));
-        deck.add(new Card('\uF0D5', 5));
-        deck.add(new Card('\uF0A6', 6));
-        deck.add(new Card('\uF0B6', 6));
-        deck.add(new Card('\uF0C6', 6));
-        deck.add(new Card('\uF0D6', 6));
-        deck.add(new Card('\uF0A7', 7));
-        deck.add(new Card('\uF0B7', 7));
-        deck.add(new Card('\uF0C7', 7));
-        deck.add(new Card('\uF0D7', 7));
-        deck.add(new Card('\uF0A8', 8));
-        deck.add(new Card('\uF0B8', 8));
-        deck.add(new Card('\uF0C8', 8));
-        deck.add(new Card('\uF0D8', 8));
-        deck.add(new Card('\uF0A9', 9));
-        deck.add(new Card('\uF0B9', 9));
-        deck.add(new Card('\uF0C9', 9));
-        deck.add(new Card('\uF0D9', 9));
-        deck.add(new Card('\uF0AA', 10));
-        deck.add(new Card('\uF0BA', 10));
-        deck.add(new Card('\uF0CA', 10));
-        deck.add(new Card('\uF0DA', 10));
-        deck.add(new Card('\uF0AB', 10));
-        deck.add(new Card('\uF0BB', 10));
-        deck.add(new Card('\uF0CB', 10));
-        deck.add(new Card('\uF0DB', 10));
-        deck.add(new Card('\uF0AD', 10));
-        deck.add(new Card('\uF0BD', 10));
-        deck.add(new Card('\uF0CD', 10));
-        deck.add(new Card('\uF0DD', 10));
-        deck.add(new Card('\uF0AE', 10));
-        deck.add(new Card('\uF0BE', 10));
-        deck.add(new Card('\uF0CE', 10));
-        deck.add(new Card('\uF0DE', 10));
+        deck.add(new Card("A", '\u2660', 11));
+        deck.add(new Card("A", '\u2665', 11));
+        deck.add(new Card("A", '\u2666', 11));
+        deck.add(new Card("A", '\u2663', 11));
+        deck.add(new Card("2", '\u2660', 2));
+        deck.add(new Card("2", '\u2665', 2));
+        deck.add(new Card("2", '\u2666', 2));
+        deck.add(new Card("2", '\u2663', 2));
+        deck.add(new Card("3", '\u2660', 3));
+        deck.add(new Card("3", '\u2665', 3));
+        deck.add(new Card("3", '\u2666', 3));
+        deck.add(new Card("3", '\u2663', 3));
+        deck.add(new Card("4", '\u2660', 4));
+        deck.add(new Card("4", '\u2665', 4));
+        deck.add(new Card("4", '\u2666', 4));
+        deck.add(new Card("4", '\u2663', 4));
+        deck.add(new Card("5", '\u2660', 5));
+        deck.add(new Card("5", '\u2665', 5));
+        deck.add(new Card("5", '\u2666', 5));
+        deck.add(new Card("5", '\u2663', 5));
+        deck.add(new Card("6", '\u2660', 6));
+        deck.add(new Card("6", '\u2665', 6));
+        deck.add(new Card("6", '\u2666', 6));
+        deck.add(new Card("6", '\u2663', 6));
+        deck.add(new Card("7", '\u2660', 7));
+        deck.add(new Card("7", '\u2665', 7));
+        deck.add(new Card("7", '\u2666', 7));
+        deck.add(new Card("7", '\u2663', 7));
+        deck.add(new Card("8", '\u2660', 8));
+        deck.add(new Card("8", '\u2665', 8));
+        deck.add(new Card("8", '\u2666', 8));
+        deck.add(new Card("8", '\u2663', 8));
+        deck.add(new Card("9", '\u2660', 9));
+        deck.add(new Card("9", '\u2665', 9));
+        deck.add(new Card("9", '\u2666', 9));
+        deck.add(new Card("9", '\u2663', 9));
+        deck.add(new Card("10", '\u2660', 10));
+        deck.add(new Card("10", '\u2665', 10));
+        deck.add(new Card("10", '\u2666', 10));
+        deck.add(new Card("10", '\u2663', 10));
+        deck.add(new Card("J", '\u2660', 10));
+        deck.add(new Card("J", '\u2665', 10));
+        deck.add(new Card("J", '\u2666', 10));
+        deck.add(new Card("J", '\u2663', 10));
+        deck.add(new Card("Q", '\u2660', 10));
+        deck.add(new Card("Q", '\u2665', 10));
+        deck.add(new Card("Q", '\u2666', 10));
+        deck.add(new Card("Q", '\u2663', 10));
+        deck.add(new Card("K", '\u2660', 10));
+        deck.add(new Card("K", '\u2665', 10));
+        deck.add(new Card("K", '\u2666', 10));
+        deck.add(new Card("K", '\u2663', 10));
         return deck;
     }
 
@@ -73,7 +76,11 @@ public class Card {
         Collections.shuffle(deck);
     }
 
-    public char getCardChar() {
-        return this.unicodeCard;
+    public void setValue(int newValue) {
+        this.value = newValue;
+    }
+
+    public String toString() {
+        return Character.toString(this.suit) + this.type;
     }
 }
