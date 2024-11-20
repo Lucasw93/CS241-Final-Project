@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class testprint {
     public static void main(String[] args) throws UnsupportedEncodingException {
-        PrintStream out = new PrintStream(System.out, true, "UTF-8");
+        PrintStream out = new PrintStream(System.out, true, "UTF-8"); // not working :(
         Card card = new Card();
         ArrayList<Card> deck = card.buildDeck();
         for (int i = 0; i < deck.size(); i++) {
