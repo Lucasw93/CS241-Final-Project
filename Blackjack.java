@@ -48,6 +48,7 @@ public class Blackjack extends Card {
     public void determineAction() {
         Scanner in = new Scanner(System.in);
         boolean flag = true;
+        boolean didPlayerBust = false;
         while (flag) {
             player.showHand();
             if (calculatePlayerHandVal() <= 21) {
@@ -74,17 +75,25 @@ public class Blackjack extends Card {
             } else if (calculatePlayerHandVal() == 21) {
                 flag = false;
                 System.out.print("Blackjack!");
-            } else if (calculatePlayerHandVal() > 21 && (player.getHand().contains(new Card("A", '\u2660', 11)) || player.getHand().contains(new Card("A", '\u2665', 11)) || player.getHand().contains(new Card("A", '\u2666', 11)) || player.getHand().contains(new Card("A", '\u2663', 11)))) {
+            } else {
                 ArrayList<Card> playerHand = player.getHand();
+                boolean flag2 = false;
                 for (int i = 0; i < playerHand.size(); i++) {
-                    if (playerHand.get(i).equals(new Card("A", '\u2660', 11)) || playerHand.get(i).equals(new Card("A", '\u2665', 11)) || playerHand.get(i).equals(new Card("A", '\u2666', 11)) || playerHand.get(i).equals(new Card("A", '\u2663', 11))) {
-                        playerHand.get(i).setValue(1);
+                    if (playerHand.get(i).getType().equals("A")) {
+                        flag2 = true;
                     }
                 }
-                continue;
-            } else {
-                flag = false;
-                System.out.println("You busted! Better luck next time!");
+                if (flag2 == true) {
+                    for (int i = 0; i < playerHand.size(); i++) {
+                        if (playerHand.get(i).getType().equals("A")) {
+                            playerHand.get(i).setValue(1);
+                        }
+                    }
+                } else {
+                    flag = false;
+                    didPlayerBust = true;
+                    System.out.println("You busted! Better luck next time!");
+                }
             }
         }
         in.close();

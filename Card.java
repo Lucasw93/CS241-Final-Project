@@ -84,6 +84,10 @@ public class Card {
         return this.value;
     }
 
+    public String getType() {
+        return this.type;
+    }
+
     public String toString() {
         return Character.toString(this.suit) + this.type;
     }
