@@ -80,6 +80,10 @@ public class Card {
         this.value = newValue;
     }
 
+    public int getValue() {
+        return this.value;
+    }
+
     public String toString() {
         return Character.toString(this.suit) + this.type;
     }

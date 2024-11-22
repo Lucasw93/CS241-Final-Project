@@ -23,11 +23,11 @@ public class Player {
         return hand.get(i);
     }
 
-    @Overide
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Card c : hand) {
-            sb.append(c)
+            sb.append(c);
         }
         return sb.toString();
     }
@@ -38,5 +38,9 @@ public class Player {
             System.out.print(c + " ");
         }
         System.out.println();
+    }
+
+    public ArrayList<Card> getHand() {
+        return hand;
     }
 }
