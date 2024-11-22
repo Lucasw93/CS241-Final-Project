@@ -25,17 +25,28 @@ public class Blackjack extends Card {
     }
 
     public void play() {
-        if (cardStack.size() <= 0) {
-            ArrayList<Card> deck = buildDeck();
-            shuffle(deck);
-            for (Card card : deck) {
-                cardStack.push(card);
-            }
-        }
+        boolean continuePlaying = true;
         System.out.println("Welcome to the CS 241 Casino! The dealer is populating your hand and their hand now!");
         populateHands();
         System.out.printf("The dealer's hand is %s.\n", dealer.getCard(0));
-        determineAction();
+        while (continuePlaying) {
+            if (cardStack.size() <= 0) {
+                ArrayList<Card> deck = buildDeck();
+                shuffle(deck);
+                for (Card card : deck) {
+                    cardStack.push(card);
+                }
+            }
+            Player currentPlayer = playerQueue.poll();
+            if (currentPlayer.equals(player)) {
+                continuePlaying = determineAction();
+            } else {
+                // dealer method goes here
+                continuePlaying = continuePlaying();
+            }
+            playerQueue.add(currentPlayer);
+        }
+
     }
 
     public void populateHands() {
@@ -45,7 +56,7 @@ public class Blackjack extends Card {
         dealer.addCard(cardStack.pop());
     }
 
-    public void determineAction() {
+    public boolean determineAction() {
         Scanner in = new Scanner(System.in);
         boolean flag = true;
         boolean didPlayerBust = false;
@@ -97,6 +108,7 @@ public class Blackjack extends Card {
             }
         }
         in.close();
+        return !didPlayerBust;
     }
 
     public int calculatePlayerHandVal() {
@@ -110,6 +122,23 @@ public class Blackjack extends Card {
     
     public void hit() {
         player.addCard(cardStack.pop());
+    }
+
+    public boolean continuePlaying() {
+        Scanner in = new Scanner(System.in);
+        while (true) {
+            System.out.println("Do you want to play another hand? Please enter y for yes or n for no:");
+            String input = in.nextLine();
+            if (input.equals("y")) {
+                in.close();
+                return true;
+            } else if (input.equals("n")) {
+                in.close();
+                return false;
+            } else {
+                System.out.println("Please enter either y or n.");
+            }
+        }
     }
 }
 
