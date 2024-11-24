@@ -41,7 +41,10 @@ public class Blackjack extends Card {
             if (currentPlayer.equals(player)) {
                 continuePlaying = determineAction();
             } else {
-                // dealer method goes here
+                continuePlaying = dealerPlay();
+                if (continuePlaying == true) {
+                    whoWon();
+                }
                 continuePlaying = continuePlaying();
             }
             playerQueue.add(currentPlayer);
@@ -62,7 +65,7 @@ public class Blackjack extends Card {
         boolean didPlayerBust = false;
         while (flag) {
             player.showHand();
-            if (calculatePlayerHandVal() <= 21) {
+            if (calculatePlayerHandVal() < 21) {
                 System.out.println("Please enter a number for which action you want to perform:\n1) Stand\n2) Hit\n3) View Cheat Sheet");
                 String uInp = in.nextLine();
                 try {
@@ -100,6 +103,7 @@ public class Blackjack extends Card {
                             playerHand.get(i).setValue(1);
                         }
                     }
+                    flag2 = false;
                 } else {
                     flag = false;
                     didPlayerBust = true;
@@ -109,6 +113,42 @@ public class Blackjack extends Card {
         }
         in.close();
         return !didPlayerBust;
+    }
+
+    public boolean dealerPlay() {
+        boolean flag = true;
+        boolean didDealerBust = false;
+        while (flag) {
+            dealer.showDealerHand();
+            if (calculateDealerHandVal() < 17) {
+                dealerHit();
+                continue;
+            } else if (calculateDealerHandVal() > 17 && calculateDealerHandVal() < 21) {
+                flag = false;
+            } else {
+                flag = false;
+                didDealerBust = true;
+                System.out.println("The dealer busted. You win!");
+            }
+        }
+        return !didDealerBust;
+    }
+
+    public void whoWon() {
+        if (calculatePlayerHandVal() > calculateDealerHandVal()) {
+            System.out.println("You won! Congrats!");
+        } else {
+            System.out.println("The dealer won. Better luck next time!");
+        }
+    }
+
+    public int calculateDealerHandVal() {
+        ArrayList<Card> dealerHand = dealer.getHand();
+        int sum = 0;
+        for (int i = 0; i < dealerHand.size(); i++) {
+            sum += dealerHand.get(i).getValue();
+        }
+        return sum;
     }
 
     public int calculatePlayerHandVal() {
@@ -122,6 +162,10 @@ public class Blackjack extends Card {
     
     public void hit() {
         player.addCard(cardStack.pop());
+    }
+
+    public void dealerHit() {
+        dealer.addCard(cardStack.pop());
     }
 
     public boolean continuePlaying() {

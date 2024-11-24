@@ -40,6 +40,14 @@ public class Player {
         System.out.println();
     }
 
+    public void showDealerHand() {
+        System.out.print("The dealer's hand is: ");
+        for (Card c : hand) {
+            System.out.print(c + " ");
+        }
+        System.out.println();
+    }
+
     public ArrayList<Card> getHand() {
         return hand;
     }
