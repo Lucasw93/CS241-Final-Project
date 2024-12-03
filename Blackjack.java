@@ -26,6 +26,8 @@ public class Blackjack extends Card {
 
     public void play() {
         boolean continuePlaying = true;
+        Scanner scan = new Scanner(System.in);
+
         System.out.println("Welcome to the CS 241 Casino! The dealer is populating your hand and their hand now!");
         populateHands();
         System.out.printf("The dealer's hand is %s.\n", dealer.getCard(0));
@@ -39,16 +41,16 @@ public class Blackjack extends Card {
             }
             Player currentPlayer = playerQueue.poll();
             if (currentPlayer.equals(player)) {
-                continuePlaying = determineAction();
+                continuePlaying = determineAction(scan);
                 if (continuePlaying == false) {
-                    continuePlaying = continuePlaying();
+                    continuePlaying = continuePlaying(scan);
                 }
             } else {
                 continuePlaying = dealerPlay();
                 if (continuePlaying == true) {
                     whoWon();
                 }
-                continuePlaying = continuePlaying();
+                continuePlaying = continuePlaying(scan);
             }
             playerQueue.add(currentPlayer);
         }
@@ -62,8 +64,7 @@ public class Blackjack extends Card {
         dealer.addCard(cardStack.pop());
     }
 
-    public boolean determineAction() {
-        Scanner in = new Scanner(System.in);
+    public boolean determineAction(Scanner in) {
         boolean flag = true;
         boolean didPlayerBust = false;
         while (flag) {
@@ -115,7 +116,6 @@ public class Blackjack extends Card {
                 }
             }
         }
-        in.close();
         return !didPlayerBust;
     }
 
@@ -181,16 +181,13 @@ public class Blackjack extends Card {
         dealer.addCard(cardStack.pop());
     }
 
-    public boolean continuePlaying() {
-        Scanner in2 = new Scanner(System.in);
+    public boolean continuePlaying(Scanner in) {
         while (true) {
             System.out.println("Do you want to play another hand? Please enter y for yes or n for no:");
-            String input = in2.nextLine();
-            if (input.equals("y")) {
-                in2.close();
+            String input = in.nextLine();
+            if (input.equalsIgnoreCase("y")) {
                 return true;
-            } else if (input.equals("n")) {
-                in2.close();
+            } else if (input.equalsIgnoreCase("n")) {
                 return false;
             } else {
                 System.out.println("Please enter either y or n.");
