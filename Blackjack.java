@@ -40,6 +40,9 @@ public class Blackjack extends Card {
             Player currentPlayer = playerQueue.poll();
             if (currentPlayer.equals(player)) {
                 continuePlaying = determineAction();
+                if (continuePlaying == false) {
+                    continuePlaying = continuePlaying();
+                }
             } else {
                 continuePlaying = dealerPlay();
                 if (continuePlaying == true) {
@@ -65,7 +68,8 @@ public class Blackjack extends Card {
         boolean didPlayerBust = false;
         while (flag) {
             player.showHand();
-            if (calculatePlayerHandVal() < 21) {
+            int handVal = calculatePlayerHandVal();
+            if (handVal < 21) {
                 System.out.println("Please enter a number for which action you want to perform:\n1) Stand\n2) Hit\n3) View Cheat Sheet");
                 String uInp = in.nextLine();
                 try {
@@ -86,9 +90,9 @@ public class Blackjack extends Card {
                     System.out.println("Please enter a number from 1 to 3.");
                     continue;
                 }
-            } else if (calculatePlayerHandVal() == 21) {
+            } else if (handVal == 21) {
                 flag = false;
-                System.out.print("Blackjack!");
+                System.out.println("Blackjack!");
             } else {
                 ArrayList<Card> playerHand = player.getHand();
                 boolean flag2 = false;
@@ -120,14 +124,19 @@ public class Blackjack extends Card {
         boolean didDealerBust = false;
         while (flag) {
             dealer.showDealerHand();
-            if (calculateDealerHandVal() < 17) {
+            int handVal = calculateDealerHandVal();
+            if (handVal < 17) {
                 dealerHit();
                 continue;
-            } else if (calculateDealerHandVal() > 17 && calculateDealerHandVal() < 21) {
+            } else if (handVal > 17 && handVal < 21) {
                 flag = false;
+            } else if (handVal == 21) {
+                flag = false;
+                System.out.println("The dealer has Blackjack!");
             } else {
                 flag = false;
                 didDealerBust = true;
+                dealer.showDealerHand();
                 System.out.println("The dealer busted. You win!");
             }
         }
@@ -135,8 +144,12 @@ public class Blackjack extends Card {
     }
 
     public void whoWon() {
-        if (calculatePlayerHandVal() > calculateDealerHandVal()) {
+        int dVal = calculateDealerHandVal();
+        int pVal = calculatePlayerHandVal();
+        if (pVal > dVal) {
             System.out.println("You won! Congrats!");
+        } else if (dVal == pVal) {
+            System.out.println("You and the dealer both had Blackjack. It's a tie!");
         } else {
             System.out.println("The dealer won. Better luck next time!");
         }
@@ -169,15 +182,15 @@ public class Blackjack extends Card {
     }
 
     public boolean continuePlaying() {
-        Scanner in = new Scanner(System.in);
+        Scanner in2 = new Scanner(System.in);
         while (true) {
             System.out.println("Do you want to play another hand? Please enter y for yes or n for no:");
-            String input = in.nextLine();
+            String input = in2.nextLine();
             if (input.equals("y")) {
-                in.close();
+                in2.close();
                 return true;
             } else if (input.equals("n")) {
-                in.close();
+                in2.close();
                 return false;
             } else {
                 System.out.println("Please enter either y or n.");
