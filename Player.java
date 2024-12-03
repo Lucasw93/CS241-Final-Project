@@ -51,4 +51,30 @@ public class Player {
     public ArrayList<Card> getHand() {
         return hand;
     }
+
+    /**
+     * emptys hand
+     */
+    public void emptyHand() {
+        hand = new ArrayList<>();
+    }
+
+
+    /**
+     * @return current value of hand accounting for aces
+     */
+    public int getHandVal() {
+        int sum = 0;
+        for (Card c : hand)
+            sum += c.getValue();
+
+        if (sum > 21) {
+            int aces = (int) hand.stream().filter(c -> c.getType().equals("A")).count();
+
+            while (aces-- > 0 && sum > 21) {
+                sum -= 10;
+            }
+        }
+        return sum;
+    }
 }

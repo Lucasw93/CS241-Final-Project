@@ -27,11 +27,15 @@ public class Blackjack extends Card {
     public void play() {
         boolean continuePlaying = true;
         Scanner scan = new Scanner(System.in);
-
         System.out.println("Welcome to the CS 241 Casino! The dealer is populating your hand and their hand now!");
-        populateHands();
-        System.out.printf("The dealer's hand is %s.\n", dealer.getCard(0));
         while (continuePlaying) {
+            resetHands();
+            populateHands();
+            if (playerQueue.peek().equals(dealer)) {
+                Player tmp = playerQueue.poll();
+                playerQueue.add(tmp);
+            }
+            System.out.printf("The dealer's hand is %s.\n", dealer.getCard(0));
             if (cardStack.size() <= 0) {
                 ArrayList<Card> deck = buildDeck();
                 shuffle(deck);
@@ -39,22 +43,26 @@ public class Blackjack extends Card {
                     cardStack.push(card);
                 }
             }
-            Player currentPlayer = playerQueue.poll();
-            if (currentPlayer.equals(player)) {
-                continuePlaying = determineAction(scan);
-                if (continuePlaying == false) {
-                    continuePlaying = continuePlaying(scan);
+            boolean inHand = true;
+            while (inHand) {
+                Player currentPlayer = playerQueue.poll();
+                if (currentPlayer.equals(player)) {
+                    inHand = determineAction(scan);
+                    if (inHand == false) {
+                        playerQueue.add(currentPlayer);
+                        break;
+                    }
+                } else {
+                    inHand = dealerPlay();
+                    if (inHand == true) {
+                        whoWon();
+                        inHand = false;
+                    }
                 }
-            } else {
-                continuePlaying = dealerPlay();
-                if (continuePlaying == true) {
-                    whoWon();
-                }
-                continuePlaying = continuePlaying(scan);
+                playerQueue.add(currentPlayer);
             }
-            playerQueue.add(currentPlayer);
+            continuePlaying = continuePlaying(scan);
         }
-
     }
 
     public void populateHands() {
@@ -62,6 +70,11 @@ public class Blackjack extends Card {
         dealer.addCard(cardStack.pop());
         player.addCard(cardStack.pop());
         dealer.addCard(cardStack.pop());
+    }
+
+    public void resetHands() {
+        for (Player p : playerQueue)
+            p.emptyHand();
     }
 
     public boolean determineAction(Scanner in) {
