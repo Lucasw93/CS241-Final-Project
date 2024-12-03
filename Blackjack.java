@@ -121,7 +121,7 @@ public class Blackjack extends Card {
         boolean didDealerBust = false;
         while (flag) {
             dealer.showDealerHand();
-            int handVal = calculateDealerHandVal();
+            int handVal = dealer.getHandVal();
             if (handVal < 17) {
                 dealerHit();
                 continue;
@@ -133,7 +133,6 @@ public class Blackjack extends Card {
             } else {
                 flag = false;
                 didDealerBust = true;
-                dealer.showDealerHand();
                 System.out.println("The dealer busted. You win!");
             }
         }
@@ -141,35 +140,18 @@ public class Blackjack extends Card {
     }
 
     public void whoWon() {
-        int dVal = calculateDealerHandVal();
-        int pVal = calculatePlayerHandVal();
+        int dVal = dealer.getHandVal();
+        int pVal = player.getHandVal();
+        System.out.printf("Let's see who won. Your hand is: %s. The dealer's hand is: %s.\n", player.toString(), dealer.toString());
         if (pVal > dVal) {
             System.out.println("You won! Congrats!");
         } else if (dVal == pVal) {
-            System.out.println("You and the dealer both had Blackjack. It's a tie!");
+            System.out.println("You and the dealer both had the same hand. It's a tie!");
         } else {
             System.out.println("The dealer won. Better luck next time!");
         }
     }
 
-    public int calculateDealerHandVal() {
-        ArrayList<Card> dealerHand = dealer.getHand();
-        int sum = 0;
-        for (int i = 0; i < dealerHand.size(); i++) {
-            sum += dealerHand.get(i).getValue();
-        }
-        return sum;
-    }
-
-    public int calculatePlayerHandVal() {
-        ArrayList<Card> playerHand = player.getHand();
-        int sum = 0;
-        for (int i = 0; i < playerHand.size(); i++) {
-            sum += playerHand.get(i).getValue();
-        }
-        return sum;
-    }
-    
     public void hit() {
         player.addCard(cardStack.pop());
     }

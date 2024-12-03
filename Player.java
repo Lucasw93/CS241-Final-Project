@@ -27,7 +27,7 @@ public class Player {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Card c : hand) {
-            sb.append(c);
+            sb.append(c).append(" ");
         }
         return sb.toString();
     }
