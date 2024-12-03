@@ -82,7 +82,7 @@ public class Blackjack extends Card {
         boolean didPlayerBust = false;
         while (flag) {
             player.showHand();
-            int handVal = calculatePlayerHandVal();
+            int handVal = player.getHandVal();
             if (handVal < 21) {
                 System.out.println("Please enter a number for which action you want to perform:\n1) Stand\n2) Hit\n3) View Cheat Sheet");
                 String uInp = in.nextLine();
@@ -108,25 +108,9 @@ public class Blackjack extends Card {
                 flag = false;
                 System.out.println("Blackjack!");
             } else {
-                ArrayList<Card> playerHand = player.getHand();
-                boolean flag2 = false;
-                for (int i = 0; i < playerHand.size(); i++) {
-                    if (playerHand.get(i).getType().equals("A")) {
-                        flag2 = true;
-                    }
-                }
-                if (flag2 == true) {
-                    for (int i = 0; i < playerHand.size(); i++) {
-                        if (playerHand.get(i).getType().equals("A")) {
-                            playerHand.get(i).setValue(1);
-                        }
-                    }
-                    flag2 = false;
-                } else {
-                    flag = false;
-                    didPlayerBust = true;
-                    System.out.println("You busted! Better luck next time!");
-                }
+                flag = false;
+                didPlayerBust = true;
+                System.out.println("You busted! Better luck next time!");
             }
         }
         return !didPlayerBust;
