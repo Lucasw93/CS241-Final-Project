@@ -30,19 +30,19 @@ public class Blackjack extends Card {
         System.out.println("Welcome to the CS 241 Casino! The dealer is populating your hand and their hand now!");
         while (continuePlaying) {
             resetHands();
-            populateHands();
-            if (playerQueue.peek().equals(dealer)) {
-                Player tmp = playerQueue.poll();
-                playerQueue.add(tmp);
-            }
-            System.out.printf("The dealer's hand is %s.\n", dealer.getCard(0));
-            if (cardStack.size() <= 0) {
+            if (cardStack.size() <= 3) {
                 ArrayList<Card> deck = buildDeck();
                 shuffle(deck);
                 for (Card card : deck) {
                     cardStack.push(card);
                 }
             }
+            populateHands();
+            if (playerQueue.peek().equals(dealer)) {
+                Player tmp = playerQueue.poll();
+                playerQueue.add(tmp);
+            }
+            System.out.printf("The dealer's hand is %s.\n", dealer.getCard(0));
             boolean inHand = true;
             while (inHand) {
                 Player currentPlayer = playerQueue.poll();
@@ -125,7 +125,7 @@ public class Blackjack extends Card {
             if (handVal < 17) {
                 dealerHit();
                 continue;
-            } else if (handVal > 17 && handVal < 21) {
+            } else if (handVal >= 17 && handVal < 21) {
                 flag = false;
             } else if (handVal == 21) {
                 flag = false;
