@@ -34,19 +34,19 @@ public class Blackjack extends Card {
                 "Cheat Sheet suggestion values: \nH = Hit\nS = Stand\nP = Split\nD/H = Double down if possible otherwise Hit\nD/S = Double down if possible otherwise Stand\nP/H = Split if double down after split is possible otherwise Hit\nR/H = Surrender if possible otherwise Hit\n\n");
         while (continuePlaying) {
             resetHands();
-            populateHands();
-            if (playerQueue.peek().equals(dealer)) {
-                Player tmp = playerQueue.poll();
-                playerQueue.add(tmp);
-            }
-            System.out.printf("The dealer's hand is %s.\n", dealer.getCard(0));
-            if (cardStack.size() <= 0) {
+            if (cardStack.size() <= 3) {
                 ArrayList<Card> deck = buildDeck();
                 shuffle(deck);
                 for (Card card : deck) {
                     cardStack.push(card);
                 }
             }
+            populateHands();
+            if (playerQueue.peek().equals(dealer)) {
+                Player tmp = playerQueue.poll();
+                playerQueue.add(tmp);
+            }
+            System.out.printf("The dealer's hand is %s.\n", dealer.getCard(0));
             boolean inHand = true;
             while (inHand) {
                 Player currentPlayer = playerQueue.poll();
@@ -130,7 +130,7 @@ public class Blackjack extends Card {
             if (handVal < 17) {
                 dealerHit();
                 continue;
-            } else if (handVal > 17 && handVal < 21) {
+            } else if (handVal >= 17 && handVal < 21) {
                 flag = false;
             } else if (handVal == 21) {
                 flag = false;
