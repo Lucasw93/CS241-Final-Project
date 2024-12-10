@@ -18,7 +18,7 @@ public class Player {
     public void addCard(Card c) {
         hand.add(c);
     }
-    
+
     public Card getCard(int i) {
         return hand.get(i);
     }
@@ -34,7 +34,7 @@ public class Player {
 
     public void showHand() {
         System.out.print("Your hand is: ");
-         for (Card c : hand) {
+        for (Card c : hand) {
             System.out.print(c + " ");
         }
         System.out.println();
@@ -58,7 +58,6 @@ public class Player {
     public void emptyHand() {
         hand = new ArrayList<>();
     }
-
 
     /**
      * @return current value of hand accounting for aces
